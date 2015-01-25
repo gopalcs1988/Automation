@@ -1,0 +1,59 @@
+{
+    "modules": [
+        {
+            "testElements": [
+                {
+                    "name": "Login Scenario",
+                    "description": "Able to login in LSI Admin",
+                    "status": "PASS",
+                    "starttime": "2015/01/21 23:51:09",
+                    "endtime": "2015/01/21 23:51:25",
+                    "snapshot": ""
+                },
+                {
+                    "name": "Auction Search",
+                    "description": "Able to search Auction",
+                    "status": "FAIL",
+                    "starttime": "2015/01/21 23:51:25",
+                    "endtime": "2015/01/21 23:51:43",
+                    "snapshot": "D:\\Liquidation\\B2C\\Project Source\\Framework\\Report\\HTMLResults2015-01-21 23-51-43_Auction Search.png"
+                }
+            ],
+            "modulename": "Auction Search",
+            "moduledescription": "Searching auction from V3 Auctions page",
+            "totalpass": 1,
+            "totalfail": 1,
+            "totaltestcase": 2,
+			"index": 0
+        },
+        {
+            "testElements": [
+                {
+                    "name": "Login Scenario",
+                    "description": "Able to login in LSI Admin",
+                    "status": "PASS",
+                    "starttime": "2015/01/21 23:50:18",
+                    "endtime": "2015/01/21 23:50:35",
+                    "snapshot": ""
+                },
+                {
+                    "name": "User name search",
+                    "description": "Searching users in LSI Admin",
+                    "status": "PASS",
+                    "starttime": "2015/01/21 23:50:35",
+                    "endtime": "2015/01/21 23:50:42",
+                    "snapshot": ""
+                }
+            ],
+            "modulename": "Login module",
+            "moduledescription": "Login and user name search",
+            "totalpass": 2,
+            "totalfail": 0,
+            "totaltestcase": 2,
+			"index": 1
+        }
+    ],
+    "totaltestcase": 4,
+    "totalpass": 3,
+    "totalfail": 1
+}

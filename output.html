@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1316/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1316/styles/kendo.default.min.css" />
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1316/styles/kendo.dataviz.min.css" />
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2014.3.1316/styles/kendo.dataviz.default.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script> 
+	<script src="http://cdn.kendostatic.com/2014.3.1316/js/kendo.all.min.js"></script>
+</head>
+<body ng-app="">
+
+	<div id="container">
+		<h3>Automation Report</h3>
+        <div id="grid"></div>
+		<img src="file:///D:/Liquidation/B2C/Project%20Source/Framework/Report/HTMLResults2015-01-21%2023-51-43_Auction%20Search.png" width="100" height="100"></img>
+     <script>
+                $(document).ready(function() {
+					var jsonData;
+					 $.ajax({
+						dataType: "json",
+						url: "output.json",
+						success: function (d) {
+							jsonData = d;
+							$("#grid").kendoGrid({
+								dataSource: {
+									type: "odata",
+									transport: {
+										read:  function (options) {
+											options.success(jsonData.modules);
+										}
+									},
+									schema: {
+									data: function (data) {
+									return data;
+									},
+									total: function (data) {
+									return data['odata.count'];
+									},
+									model: {
+									fields: {
+									modulename: { type: "string" },
+									moduledescription: { type: "string" }
+									}
+									}
+									},
+									pageSize: 15,
+									
+									aggregate: [
+									{ field: "totalpass", aggregate: "sum" },
+									{ field: "totalfail", aggregate: "sum" },
+									{ field: "totaltestcase", aggregate: "sum" }
+									]
+								},
+								height: 500,
+							  resizable: true,
+							  pageable: {
+								  refresh: true,
+								  pageSizes: true,
+								  buttonCount: 5
+							  },
+							  detailInit: detailInit,
+								
+								columns: [
+									{ 	field: "modulename", 
+										title: "Module Name",
+										width: 100
+									},
+									{ 	field: "moduledescription", 
+										title: "Module Description",
+										width: 100
+									},
+									{ 	field: "totalpass", 
+										title: "PASS",
+										width: 100,
+										aggregates: ["sum"],
+										footerTemplate: "TOTAL PASS: #= sum#"
+									},
+									{ 	field: "totalfail", 
+										title: "FAIL",
+										width: 100,
+										aggregates: ["sum"],
+										footerTemplate: "TOTAL FAIL: #= sum#"
+									},
+									{ 	field: "totaltestcase", 
+										title: "Total Cases",
+										width: 100,
+										aggregates: ["sum"],
+										footerTemplate: "TOTAL CASES: #= sum#"
+									}
+								]
+							});
+						}
+						
+						
+					});
+					
+					function detailInit(e) {
+                    $("<div/>").appendTo(e.detailCell).kendoGrid({
+                        dataSource: {
+                            type: "odata",
+                            transport: {
+                                read:  function (options) {
+											options.success(jsonData.modules[Number(e.data.index)].testElements);
+										}
+                            },
+							schema: {
+									data: function (data) {
+									return data;
+									},
+									total: function (data) {
+									return data['odata.count'];
+									},
+									model: {
+									fields: {
+									modulename: { type: "string" },
+									moduledescription: { type: "string" }
+									}
+									}
+									},
+                            serverPaging: true,
+                            serverSorting: true,
+                            serverFiltering: true,
+                            pageSize: 10
+                        },
+                        scrollable: false,
+                        sortable: true,
+                        pageable: {
+								  refresh: true,
+								  pageSizes: true,
+								  buttonCount: 5
+							  },
+                        columns: [
+									{ 	field: "name", 
+										title: "Name",
+										width: 200
+									},
+									{ 	field: "description", 
+										title: "Description",
+										width: 200
+									},
+									{ 	field: "status", 
+										title: "Status",
+										width: 200
+									},                
+									{ 	field: "starttime", 
+										title: "Start Time",
+										width: 100
+									},
+									{ 	field: "endtime", 
+										title: "End Time",
+										width: 100
+									},
+									{ 	field: "snapshot", 
+										title: "Snapshot",
+										width: 200,
+										template: "<a href='#:snapshot#' target=''>#:snapshot#</a>"
+									}                            
+								]
+                    });
+                }
+                    
+                });
+				
+				
+                
+            </script>
+    </div>
+</body>
+</html>
